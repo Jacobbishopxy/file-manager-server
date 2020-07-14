@@ -2,10 +2,13 @@ const compression = require('compression');
 const express = require('express');
 const fileManagerMiddleware = require('@opuscapita/filemanager-server').middleware;
 const logger = require('@opuscapita/filemanager-server').logger;
+const cors = require('cors');
 const env = require('./resources/env.json')
 
 
 const app = express();
+app.use(cors());
+
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || '3020';
 const baseUrl = process.env.BASE_URL || '';
@@ -13,11 +16,6 @@ const baseUrl = process.env.BASE_URL || '';
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(compression());
-
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    next();
-});
 
 app.use(`${baseUrl}/:context`, (req, res) => {
     const {context} = req.params;
