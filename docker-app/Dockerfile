@@ -1,9 +1,10 @@
 # Author: Jacob Bishop
 
-ARG     NODE_IMAGE
+ARG     BASE_IMAGE_NAME
+ARG     BASE_IMAGE_VERSION
 
 # base
-FROM    $NODE_IMAGE
+FROM    $BASE_IMAGE_NAME:$BASE_IMAGE_VERSION
 
 # copy source code to workdir
 COPY    . /app
