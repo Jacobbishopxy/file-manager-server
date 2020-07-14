@@ -1,7 +1,6 @@
 const compression = require('compression');
 const express = require('express');
 const fileManagerMiddleware = require('@opuscapita/filemanager-server').middleware;
-const logger = require('@opuscapita/filemanager-server').logger;
 const cors = require('cors');
 const env = require('./resources/env.json')
 
@@ -9,7 +8,6 @@ const env = require('./resources/env.json')
 const app = express();
 app.use(cors());
 
-const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || '3020';
 const baseUrl = process.env.BASE_URL || '';
 
@@ -35,13 +33,4 @@ app.use(`${baseUrl}/:context`, (req, res) => {
 });
 
 
-app.listen(port, host, function (err) {
-    if (err) logger.error(err);
-
-    logger.info(`Server listening at http://${host}:${port}`);
-});
-
-process.on('exit', function () {
-    logger.warn('Server has been stopped');
-});
-
+app.listen(port, () => console.log(`App listening on port ${port}`));
