@@ -9,6 +9,7 @@ services:
       - ${APP_PORT}:3020
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      - ${VOLUME_EI}:${VOLUME_EI}:ro
     command: yarn start
 
 
