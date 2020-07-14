@@ -9,26 +9,17 @@ const app = express();
 app.use(cors());
 
 const port = process.env.PORT || '3020';
-const baseUrl = process.env.BASE_URL || '';
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(compression());
 
-app.use(`${baseUrl}/:context`, (req, res) => {
+
+app.use(`/bank/:context`, (req, res) => {
     const {context} = req.params;
-
-    let p, rn;
-    if (context !== undefined) {
-        p = `${env.fileRoot}/${context}`
-        rn = context
-    } else {
-        p = env.fileRoot
-        rn = "."
-    }
-
-    const fmm = fileManagerMiddleware({fsRoot: p, rootName: rn})
-
+    const fmm = fileManagerMiddleware({
+        fsRoot: `${env.fileRoot}/${env.bankDir}/${context}`, rootName: context
+    });
     return fmm(req, res);
 });
 
